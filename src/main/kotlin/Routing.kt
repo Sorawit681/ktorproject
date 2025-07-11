@@ -50,7 +50,7 @@ fun Application.configureRouting() {
         post("/categories") {
             val category = call.receive<Category>()
             if (categories.any { it.id == category.id }) {
-                call.respond(mapOf("error" to "Category ID already exists"))
+                call.respond(mapOf("error" to "Category ID already exist"))
             } else {
                 categories.add(category)
                 call.respond(mapOf("status" to "Category added"))
@@ -83,7 +83,7 @@ fun Application.configureRouting() {
         post("/transactions") {
             val transaction = call.receive<Transaction>()
             if (transactions.any { it.id == transaction.id }) {
-                call.respond(mapOf("error" to "Transaction ID already exists"))
+                call.respond(mapOf("error!!" to "Transaction ID already exists"))
             } else {
                 transactions.add(transaction)
                 call.respond(mapOf("status" to "Transaction added"))
@@ -98,7 +98,7 @@ fun Application.configureRouting() {
                 transactions[index] = updated
                 call.respond(mapOf("status" to "Transaction updated"))
             } else {
-                call.respond(mapOf("error" to "Transaction not found"))
+                call.respond(mapOf("error!!" to "Transaction not found"))
             }
         }
 
@@ -114,7 +114,7 @@ fun Application.configureRouting() {
             val month = call.request.queryParameters["month"]?.toIntOrNull()
 
             if (year == null || month == null) {
-                call.respond(mapOf("error" to "Missing year or month query parameter"))
+                call.respond(mapOf("error!!" to "Missing year and month query parameter"))
                 return@get
             }
 
@@ -129,7 +129,7 @@ fun Application.configureRouting() {
 
             val grouped = filtered.groupBy { it.categoryId }
                 .map { (catId, txs) ->
-                    val catName = categories.find { it.id == catId }?.name ?: "Unknown"
+                    val catName = categories.find { it.id == catId }?.name ?: "Unknown this name"
                     MonthlyReportItem(category = catName, total = txs.sumOf { it.amount })
                 }
 

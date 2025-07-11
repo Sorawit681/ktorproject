@@ -29,7 +29,7 @@ class ApplicationTest {
             configureSerialization()
             configureRouting()
         }
-        val category = Category(id = "cat1", name = "Food")
+        val category = Category(id = "cat123", name = "food")
         val response = client.post("/categories") {
             contentType(ContentType.Application.Json)
             setBody(Json.encodeToString(category))
@@ -48,7 +48,7 @@ class ApplicationTest {
         // Add category
         client.post("/categories") {
             contentType(ContentType.Application.Json)
-            setBody(Json.encodeToString(Category(id = "cat1", name = "Food")))
+            setBody(Json.encodeToString(Category(id = "cat123", name = "food")))
         }
 
         // Add transaction (July 2025)
@@ -68,11 +68,11 @@ class ApplicationTest {
             )
         }
 
-        // Check monthly report
+
         val reportResponse = client.get("/reports/monthly?year=2025&month=7")
         assertEquals(HttpStatusCode.OK, reportResponse.status)
         val body = reportResponse.bodyAsText()
-        assertTrue(body.contains("Food"))
+        assertTrue(body.contains("food"))
         assertTrue(body.contains("150.0"))
     }
 }
